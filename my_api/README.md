@@ -75,7 +75,7 @@ end
 
 `curl 'http://localhost:8080/articles'`
 
-実行結果
+実行結果　　
 `{ "Hello": "Rails" }`
 
 ### Articleモデル作成
