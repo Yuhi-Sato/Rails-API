@@ -36,6 +36,7 @@ cloud9はここからスタート
 
 `cd my_api`
 
+  
 ### レスポンス{"Hello":"Rails"}を得る
 
 ---
@@ -78,6 +79,7 @@ end
 実行結果　　
 `{ "Hello": "Rails" }`
 
+  
 ### Articleモデル作成
 
 ---
@@ -142,6 +144,7 @@ Loading development environment (Rails 6.1.7.4)
  updated_at: Wed, 05 Jul 2023 08:09:35.206328606 UTC +00:00>
 ```
 
+  
 ### レスポンスを整形する
 
 ---
@@ -205,6 +208,7 @@ yuhi.link:~/environment/my_api (master) $ curl 'http://localhost:8080/articles'
 [{"id":1,"title":"長尾研Wiki","body":"長尾研の進化計算は日本一ぃぃぃぃぃぃ"}]
 ```
 
+  
 ### シードデータ
 
 ---
@@ -253,6 +257,7 @@ Article.create!(
 [{"id":1,"title":"長尾研Wiki","body":"長尾研の進化計算は日本一ぃぃぃぃぃぃ"},{"id":2,"title":"推しの子","body":"重曹を舐める天才子役"},{"id":3,"title":"呪術廻戦","body":"失礼だな、純愛だよ"},{"id":4,"title":"ジョジョ スターダストクルセイダーズ","body":"テメェは俺を怒らせた"}]
 ```
 
+  
 ### POSTメソッド
 
 ---
@@ -301,4 +306,48 @@ end
 実行結果
 ```bash
 {"id":5,"title":"DIO","body":"そこに痺れる憧れる"}
+```
+  
+  
+### idを指定してデータを取得
+---
+ここからは少し雑にしていきます。不足している部分は各自考えてください。
+
+```ruby
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "/articles", to: "articles#index"
+  get "/articles/:id", to: "articles#show"
+  post "/articles", to: "articles#create"
+end
+```
+
+```ruby
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.first(10)
+    render json: @articles
+  end
+
+  def show
+    @article = Article.find(params[:id])
+    render json: @article
+  end
+
+  def create
+    @article = Article.create(article_params)
+    render json: @article
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:body)
+  end
+end
+```
+
+`curl 'http://localhost:8080/articles/1'`
+
+```Bash
+{"id":1,"title":"長尾研Wiki","body":"長尾研の進化計算は日本一ぃぃぃぃぃぃ"}%
 ```
