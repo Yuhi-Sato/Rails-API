@@ -4,9 +4,19 @@ class ArticlesController < ApplicationController
     render json: @articles
   end
 
+  def show
+    @article = Article.find(params[:id])
+    render json: @article
+  end
+
   def create
     @article = Article.create(article_params)
     render json: @article
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
   end
 
   private
