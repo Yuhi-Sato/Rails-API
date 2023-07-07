@@ -6,9 +6,10 @@
  ----------------------------------------------------------------- 
 
 
-Hi there! Welcome to AWS Cloud9!
+### AWS cloud9を使ってRails-APIハンズオンを始めよう！
+* はじめにAWSアカウントを作成しましょう
+* アカウント作成後、2段階認証を有効にしましょう
+* cloud9を起動させましょう
+* `gem install rails`でRailsをダウンロードしましょう
 
-To get started, create some files, play with the terminal,
-or visit https://docs.aws.amazon.com/console/cloud9/ for our documentation.
-
-Happy coding!
+### これで開発準備は完了です！　my_apiへ！
