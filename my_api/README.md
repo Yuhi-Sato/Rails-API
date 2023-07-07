@@ -351,3 +351,47 @@ end
 ```Bash
 {"id":1,"title":"長尾研Wiki","body":"長尾研の進化計算は日本一ぃぃぃぃぃぃ"}%
 ```
+
+### idを指定してデータを削除
+```ruby
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "/articles", to: "articles#index"
+  get "/articles/:id", to: "articles#show"
+  post "/articles", to: "articles#create"
+  delete "/articles/:id", to: "articles#destroy"
+end
+```
+
+```ruby
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.first(10)
+    render json: @articles
+  end
+
+  def show
+    @article = Article.find(params[:id])
+    render json: @article
+  end
+
+  def create
+    @article = Article.create(article_params)
+    render json: @article
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:body)
+  end
+end
+```
+
+`curl -X DELETE -H "Content-Type: application/json" 'http://localhost:8080/articles/1'`
+
+
