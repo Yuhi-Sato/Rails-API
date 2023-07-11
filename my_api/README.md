@@ -110,7 +110,16 @@ rigepoleでは、テーブルの定義をSchemafileに記述すると実際のDB
 
 - Schemaファイルを作成
 
-`touch db/Schemafile`
+`touch db/Schemafile`  
+db/Schemafile
+```ruby
+create_table :articles do |t|
+    t.string :title
+    t.text :body
+    
+    t.timestamps
+end
+```
 
 - テーブルを作成
 
@@ -394,4 +403,6 @@ end
 
 `curl -X DELETE -H "Content-Type: application/json" 'http://localhost:8080/articles/1'`
 
+### userテーブルを作成
+`bundle exec rails g model user --no-migration --skip-test-framework`
 
