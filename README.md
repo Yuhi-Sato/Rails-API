@@ -5,10 +5,12 @@
      /_/   \_\_/\_/  |____/   \____|_|\___/ \__,_|\__,_|  /_/ 
  ----------------------------------------------------------------- 
 
+### AWS cloud9とは？
+https://aws.amazon.com/jp/cloud9/
 
 ### AWS cloud9を使ってRails-APIハンズオンを始めよう！
 * はじめにAWSアカウントを作成しましょう  
-https://aws.amazon.com/jp/register-flow/
+AWSアカウント作成手順：https://aws.amazon.com/jp/register-flow/
 
 * アカウント作成後、MFA(2段階認証)を有効にしましょう
 * cloud9を起動させましょう
