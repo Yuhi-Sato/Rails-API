@@ -7,9 +7,11 @@
 
 
 ### AWS cloud9を使ってRails-APIハンズオンを始めよう！
-* はじめにAWSアカウントを作成しましょう
-* アカウント作成後、2段階認証を有効にしましょう
+* はじめにAWSアカウントを作成しましょう  
+https://aws.amazon.com/jp/register-flow/
+
+* アカウント作成後、MFA(2段階認証)を有効にしましょう
 * cloud9を起動させましょう
-* `gem install rails`でRailsをダウンロードしましょう
+* cloud9環境で`gem install rails`でRailsをダウンロードしましょう
 
 ### これで開発準備は完了です！　my_apiへ！
