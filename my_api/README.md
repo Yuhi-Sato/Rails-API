@@ -6,7 +6,7 @@ https://guides.rubyonrails.org/api_app.html#choosing-middleware
 
 [https://railsguides.jp/api_app.html](https://railsguides.jp/getting_started.html)
 
-https://github.com/cookpad/cookpad-internship-2022-summer-serverside
+[https://github.com/cookpad/cookpad-internship-2022-summer-serverside](https://github.com/cookpad/cookpad-internship-2023-summer-server-public)
 
 # 手順
 
@@ -110,7 +110,16 @@ rigepoleでは、テーブルの定義をSchemafileに記述すると実際のDB
 
 - Schemaファイルを作成
 
-`touch db/Schemafile`
+`touch db/Schemafile`  
+my_api/db/Schemafile
+```ruby
+create_table :articles do |t|
+    t.string :title
+    t.text :body
+    
+    t.timestamps
+end
+```
 
 - テーブルを作成
 
@@ -394,4 +403,80 @@ end
 
 `curl -X DELETE -H "Content-Type: application/json" 'http://localhost:8080/articles/1'`
 
+### userテーブルを作成
+---
+`bundle exec rails g model user --no-migration --skip-test-framework`
 
+my_api/db/Schemafile
+```ruby
+create_table :articles do |t|
+    t.string :title
+    t.text :body
+    
+    t.timestamps
+end
+
+create_table :users do |t|
+    t.string :name, null: false
+    t.timestamps
+end
+```
+
+```ruby
+class Article < ApplicationRecord
+    belongs_to :user
+end
+```
+
+```ruby
+class ArticleSerializer < ActiveModel::Serializer
+  attributes :id, :title, :body
+
+  belongs_to :user
+end
+```
+
+```ruby
+class UserSerializer < ActiveModel::Serializer
+    attributes :id, :name
+end
+```
+
+```ruby
+User.create!(
+    [
+        { name: 'Sato' },
+        { name: 'Suzuki' },
+        { name: 'Takahashi' }
+    ]
+)
+
+Article.create!(
+    [
+        {
+            user_id: 1,
+            title: '長尾研Wiki',
+            body: '長尾研の進化計算は日本一ぃぃぃぃぃぃ'
+        },
+        {
+            user_id: 2,
+            title: '推しの子',
+            body: '重曹を舐める天才子役'
+        },
+        {
+            user_id: 2,
+            title: '呪術廻戦',
+            body: '失礼だな、純愛だよ'
+        },
+        {
+            user_id: 3,
+            title: 'ジョジョ スターダストクルセイダーズ',
+            body: 'テメェは俺を怒らせた'
+        }
+    ]
+)
+```
+
+`bundle exec ridgepole --apply --file db/Schemafile --config config/database.yml`  
+`bundle exec rails db:seed:replant`  
+`curl 'http://localhost:8080/articles'`  
