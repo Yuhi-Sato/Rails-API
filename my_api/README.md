@@ -6,7 +6,7 @@ https://guides.rubyonrails.org/api_app.html#choosing-middleware
 
 [https://railsguides.jp/api_app.html](https://railsguides.jp/getting_started.html)
 
-https://github.com/cookpad/cookpad-internship-2022-summer-serverside
+[https://github.com/cookpad/cookpad-internship-2022-summer-serverside](https://github.com/cookpad/cookpad-internship-2023-summer-server-public)
 
 # 手順
 
@@ -111,7 +111,7 @@ rigepoleでは、テーブルの定義をSchemafileに記述すると実際のDB
 - Schemaファイルを作成
 
 `touch db/Schemafile`  
-db/Schemafile
+my_api/db/Schemafile
 ```ruby
 create_table :articles do |t|
     t.string :title
@@ -404,5 +404,42 @@ end
 `curl -X DELETE -H "Content-Type: application/json" 'http://localhost:8080/articles/1'`
 
 ### userテーブルを作成
+---
 `bundle exec rails g model user --no-migration --skip-test-framework`
 
+my_api/db/Schemafile
+```ruby
+create_table :articles do |t|
+    t.string :title
+    t.text :body
+    
+    t.timestamps
+end
+
+create_table :users do |t|
+    t.string :name, null: false
+    t.timestamps
+end
+```
+
+```ruby
+class Article < ApplicationRecord
+    belongs_to :user
+end
+```
+
+```ruby
+class ArticleSerializer < ActiveModel::Serializer
+  attributes :id, :title, :body
+
+  belongs_to :user
+end
+```
+
+```ruby
+class ArticleSerializer < ActiveModel::Serializer
+    attributes :id, :name
+end
+```
+
+`bundle exec ridgepole --apply --file db/Schemafile --config config/database.yml`
